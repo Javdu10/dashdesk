@@ -17,16 +17,16 @@ class CoinSeeder extends Seeder
             'symbol' => 'NANO',
         ]);
 
-        // DB::table('coins')->insert([
-        //     'id_coingecko' => 'eth',
-        //     'name' => 'Ethereum',
-        //     'symbol' => 'ETH',
-        // ]);
+        DB::table('coins')->insert([
+            'id_coingecko' => 'ethereum',
+            'name' => 'Ethereum',
+            'symbol' => 'ETH',
+        ]);
 
-        // DB::table('coins')->insert([
-        //     'id_coingecko' => 'xmr',
-        //     'name' => 'Monero',
-        //     'symbol' => 'XMR',
-        // ]);
+        DB::table('coins')->insert([
+            'id_coingecko' => 'monero',
+            'name' => 'Monero',
+            'symbol' => 'XMR',
+        ]);
     }
 }
