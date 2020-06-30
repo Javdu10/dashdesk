@@ -8,8 +8,8 @@
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
-        <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+        {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script> --}}
+        {{-- <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script> --}}
         <!-- Styles -->
         <link rel="stylesheet" href="{{asset('css/app.css')}}" />
         <script src="{{asset('js/app.js')}}" ></script>
@@ -58,7 +58,7 @@
               </li>
               @foreach ($coins as $coin)
               <li class="nav-item">
-              <a id="nav-{{$coin->id_coingecko}}" onclick="setChart('{{$coin->id_coingecko}}')" class="nav-link">
+              <a id="nav-{{$coin->id_coingecko}}" onclick="App.setChart('{{$coin->id_coingecko}}')" class="nav-link">
                   <img src="{{$coin->logo}}" alt="{{$coin->name}}">
                   <span class="link-text">{{$coin->name}}</span>
                 </a>
@@ -148,9 +148,12 @@
           </nav>
         
           <main>
-            <h1>CSS is Cool</h1>
-        
-            
+              <div>
+                  <span id="volume"></span>
+                  <span id="price"></span>
+                  <span id="marketcap"></span>
+              </div>
+              <div id="chart"></div>
           </main>
         @php
             $coins_stats = [];
@@ -187,14 +190,6 @@
             }
 
             document.getElementById('themeButton').onclick = toggleTheme;
-
-            function setChart(coin)
-            {
-                console.log(coin)
-                document.querySelectorAll('.nav-link').forEach(el => {
-                    el.classList.remove('active')
-                })
-                document.getElementById('nav-'+coin).classList.add('active')
-            }
+            
         </script>
 </html>

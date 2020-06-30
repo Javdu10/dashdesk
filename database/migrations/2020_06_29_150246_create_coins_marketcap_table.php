@@ -15,9 +15,9 @@ class CreateCoinsMarketcapTable extends Migration
     {
         Schema::create('coins_marketcap', function (Blueprint $table) {
             $table->id();
-            $table->decimal('marketcap', 20, 2);
+            $table->decimal('value', 20, 2);
             $table->datetime('time');
-            $table->unique(['marketcap', 'time']);
+            $table->unique(['value', 'time']);
             $table->foreignId('coin_id')->constrained();
         });
     }

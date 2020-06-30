@@ -6,27 +6,43 @@
 
 require('./bootstrap');
 
-//window.Vue = require('vue');
+window.App = {
+    setActiveLink(coin)
+    {
+        document.querySelectorAll('.nav-link').forEach(el => {
+            el.classList.remove('active')
+        })
+        document.getElementById('nav-'+coin).classList.add('active')
+    },
+    setCoinInfo(coin)
+    {
+        document.getElementById('volume').innerText = window.coins[coin].last_volume
+        document.getElementById('price').innerText = window.coins[coin].last_price
+        document.getElementById('marketcap').innerText = window.coins[coin].last_marketcap
+    },
+    initChart(coin)
+    {
+        var el = document.getElementById('chart')
+        while (el.firstChild) {
+            el.firstChild.remove();
+        }
+        const chart = LightweightCharts.createChart(el, { width: 400, height: 300 });
+        const lineSeries = chart.addLineSeries();
+        axios.post('api/coin/'+coin)
+            .then(function (data) {
+                lineSeries.setData(data.prices)
+            })
+            .catch(function () {
+                console.error('No coin');
+            });
+        
+    },
+    setChart(coin)
+    {
+        this.setActiveLink(coin)
+        this.setCoinInfo(coin)
+        this.initChart(coin)
+        
+    }
+}
 
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
-
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-
-//Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-
-// const app = new Vue({
-//     el: '#app',
-// });

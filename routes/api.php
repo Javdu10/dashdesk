@@ -1,5 +1,6 @@
 <?php
 
+use App\Coin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +15,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::get('/coin/{coin_gecko}', function (Request $request, $coin_gecko) {
+    $coin = Coin::where('id_coingecko', $coin_gecko)->firstOrFail();
+
+    $data = [];
+    $data['prices'] = $coin->prices()->orderBy('id', 'DESC')->take(24)->get();
+    return response()->json($data);
 });

@@ -15,9 +15,9 @@ class CreateCoinsVolumesTable extends Migration
     {
         Schema::create('coins_volumes', function (Blueprint $table) {
             $table->id();
-            $table->decimal('volume', 20, 2);
+            $table->decimal('value', 20, 2);
             $table->datetime('time');
-            $table->unique(['volume', 'time']);
+            $table->unique(['value', 'time']);
             $table->foreignId('coin_id')->constrained();
         });
     }

@@ -28,7 +28,7 @@ class StatsSeeder extends Seeder
             foreach ($result['prices'] as $key => $price) {
                 $result['prices'][$key] = [
                     'time' => Carbon::createFromTimeStampMs($price[0]),
-                    'price' => $price[1],
+                    'value' => $price[1],
                     'coin_id' => $coin->id,
                 ];
             }
@@ -37,7 +37,7 @@ class StatsSeeder extends Seeder
             foreach ($result['market_caps'] as $key => $marketcap) {
                 $result['market_caps'][$key] = [
                     'time' => Carbon::createFromTimeStampMs($marketcap[0]),
-                    'marketcap' => $marketcap[1],
+                    'value' => $marketcap[1],
                     'coin_id' => $coin->id,
                 ];
             }
@@ -47,7 +47,7 @@ class StatsSeeder extends Seeder
             foreach ($result['total_volumes'] as $key => $volume) {
                 $result['total_volumes'][$key] = [
                     'time' => Carbon::createFromTimeStampMs($volume[0]),
-                    'volume' => $volume[1],
+                    'value' => $volume[1],
                     'coin_id' => $coin->id,
                 ];
                 

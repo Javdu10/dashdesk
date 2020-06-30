@@ -15,9 +15,9 @@ class CreateCoinsPricesTable extends Migration
     {
         Schema::create('coins_prices', function (Blueprint $table) {
             $table->id();
-            $table->decimal('price', 12, 2);
+            $table->decimal('value', 12, 2);
             $table->datetime('time');
-            $table->unique(['price', 'time']);
+            $table->unique(['value', 'time']);
             $table->foreignId('coin_id')->constrained();
         });
     }
