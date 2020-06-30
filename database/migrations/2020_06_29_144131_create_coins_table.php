@@ -19,7 +19,7 @@ class CreateCoinsTable extends Migration
             $table->string('name');
             $table->string('symbol');
             $table->string('logo', 255);
-
+            $table->text('description');
             $table->unique(['id_coingecko', 'name', 'symbol']);
         });
     }

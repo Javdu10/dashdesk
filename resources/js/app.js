@@ -26,6 +26,9 @@ window.App = {
             document.getElementById('volume').innerText = window.coins[coin].last_volume
             document.getElementById('price').innerText = window.coins[coin].last_price
             document.getElementById('marketcap').innerText = window.coins[coin].last_marketcap
+            document.getElementById('description').innerText = window.coins[coin].description
+            document.getElementById('title').innerText = coin.toUpperCase()
+            
         },
         initChart(coin,date)
         {
@@ -38,7 +41,7 @@ window.App = {
                     if(!window.Chart){
                         window.Chart = LightweightCharts.createChart(document.getElementById('chart'), { 
                             width: el.offsetWidth,
-                            height: el.offsetHeight - document.getElementById('start_of_week').offsetHeight,
+                            height: el.offsetHeight,
                             layout: {
                                 backgroundColor: getComputedStyle(document.body).getPropertyValue('--bg-primary'),
                                 textColor: getComputedStyle(document.body).getPropertyValue('--text-primary'),
