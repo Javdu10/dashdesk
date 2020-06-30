@@ -45,7 +45,7 @@ class RefreshData extends Command
     {
         $coins = Coin::all();
         
-        $before_yesterday = now()->subDay(2)->timestamp;
+        $before_yesterday = now()->subDay(91)->timestamp;
         $now = now()->timestamp;
 
         foreach ($coins as $coin) {

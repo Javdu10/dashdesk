@@ -32831,7 +32831,11 @@ window.App = {
       if (!window.Chart) {
         window.Chart = LightweightCharts.createChart(document.getElementById('chart'), {
           width: el.offsetWidth,
-          height: el.offsetHeight
+          height: el.offsetHeight - document.getElementById('start_of_week').offsetHeight,
+          layout: {
+            backgroundColor: getComputedStyle(document.body).getPropertyValue('--bg-primary'),
+            textColor: getComputedStyle(document.body).getPropertyValue('--text-primary')
+          }
         });
       }
 

@@ -156,12 +156,13 @@
                 <div id="parent-chart">
                     <div id="chart"></div>
                 </div>
-                
-                <button value="{{now()->startOfWeek()}}" onclick="App.setChartDataFrom(this.value)">This week</button>
-                <button value="{{now()->startOfWeek()->subWeek()}}" onclick="App.setChartDataFrom(this.value)">Past Week</button>
-                <button value="{{now()->startOfMonth()}}" onclick="App.setChartDataFrom(this.value)">This Month</button>
-                <button value="{{now()->startOfYear()}}" onclick="App.setChartDataFrom(this.value)">This Year</button>
-            </main>
+                <div>
+                    <button id="start_of_week" value="{{now()->startOfWeek()}}" onclick="App.setChartDataFrom(this.value)">This week</button>
+                    <button value="{{now()->startOfWeek()->subWeek()}}" onclick="App.setChartDataFrom(this.value)">Past Week</button>
+                    <button value="{{now()->startOfMonth()}}" onclick="App.setChartDataFrom(this.value)">This Month</button>
+                    <button value="{{now()->startOfYear()}}" onclick="App.setChartDataFrom(this.value)">This Year</button>
+                </div>
+                </main>
         @php
             $coins_stats = [];
             foreach ($coins as $coin) {
@@ -175,6 +176,18 @@
     </body>
         <script>
             window.coins = JSON.parse('{!! json_encode($coins_stats) !!}')
+            
+            window.Chart = null
+            window.Serie = null
+            window.currentCoin = 'nano'
+            window.currentTime = null
+            App.setChart(currentCoin)
+
+            document.body.onresize = function() {
+                var el = document.getElementById('parent-chart')
+                App.resizeChart(el.offsetHeight- document.getElementById('start_of_week').offsetHeight, el.offsetWidth);
+            }
+
             const themeMap = {
                 dark: "light",
                 light: "solar",
@@ -187,25 +200,21 @@
                     tmp);
             const bodyClass = document.body.classList;
             bodyClass.add(theme);
-
+            
             function toggleTheme() {
                 const current = localStorage.getItem('theme');
                 const next = themeMap[current];
 
                 bodyClass.replace(current, next);
+                window.Chart.applyOptions({
+                    layout: {
+                        backgroundColor: getComputedStyle(document.body).getPropertyValue('--bg-primary'),
+                        textColor: getComputedStyle(document.body).getPropertyValue('--text-primary'),
+                    },
+                });
                 localStorage.setItem('theme', next);
             }
 
             document.getElementById('themeButton').onclick = toggleTheme;
-            window.Chart = null
-            window.Serie = null
-            window.currentCoin = 'nano'
-            window.currentTime = null
-            App.setChart(currentCoin)
-
-            document.body.onresize = function() {
-                var el = document.getElementById('parent-chart')
-                App.resizeChart(el.offsetHeight, el.offsetWidth);
-            }
         </script>
 </html>
