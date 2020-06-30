@@ -6,10 +6,14 @@
 
 require('./bootstrap');
 
-window.App = function(){
-    var Char = null;
-    var Serie = null;
-    return {
+window.App = {
+        resizeChart(height, width)
+        {
+            if(!window.Chart)
+                return 'oups'
+            window.Chart.applyOptions({ width, height })
+            window.Chart.timeScale().fitContent();
+        },
         setActiveLink(coin)
         {
             document.querySelectorAll('.nav-link').forEach(el => {
@@ -23,41 +27,47 @@ window.App = function(){
             document.getElementById('price').innerText = window.coins[coin].last_price
             document.getElementById('marketcap').innerText = window.coins[coin].last_marketcap
         },
-        initChart(coin)
+        initChart(coin,date)
         {
-            
-            axios.get('api/coin/'+coin)
+            if(date)
+                window.currentTime = date
+            var uri = 'api/coin/'+coin+(window.currentTime ? '?from='+window.currentTime : '')
+            axios.get(uri)
                 .then(function (response) {
-                    if(!this.Chart){
-                        this.Chart = LightweightCharts.createChart(document.getElementById('chart'), { 
-                            width: 400, 
-                            height: 300,
-                            localization: {
-                                dateFormat: 'yyyy/MM/dd H:m:s',
-                            },
+                    var el = document.getElementById('parent-chart')
+                    if(!window.Chart){
+                        window.Chart = LightweightCharts.createChart(document.getElementById('chart'), { 
+                            width: el.offsetWidth,
+                            height: el.offsetHeight
                         });
                     }
-                    if(!this.Serie)
-                        this.Serie = this.Chart.addLineSeries();
+                    if(!window.Serie)
+                        window.Serie = window.Chart.addLineSeries();
                     else{
-                        this.Chart.removeSeries(this.Serie);
-                        this.Serie = this.Chart.addLineSeries();
+                        window.Chart.removeSeries(window.Serie);
+                        window.Serie = window.Chart.addLineSeries();
                     }
                     var sorted = response.data.prices.sort((a,b) => a.id - b.id)
-                    this.Serie.setData(sorted)
+                    window.Serie.setData(sorted)
+                    window.Chart.timeScale().fitContent();
+                    
                 })
                 .catch(function (error) {
                     console.error('No coin',error);
                 });
-            
+                window.currentCoin = coin;
         },
-        setChart(coin)
+        setChart(coin,date)
         {
             this.setActiveLink(coin)
             this.setCoinInfo(coin)
-            this.initChart(coin)
+            this.initChart(coin,date)
             
+        },
+        setChartDataFrom(date)
+        {
+            this.setChart(window.currentCoin, date)
         }
-    }   
-}()
+       
+}
 

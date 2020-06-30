@@ -17,8 +17,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/coin/{coin_gecko}', function (Request $request, $coin_gecko) {
     $coin = Coin::where('id_coingecko', $coin_gecko)->firstOrFail();
-
+    
     $data = [];
-    $data['prices'] = $coin->prices()->orderBy('id', 'DESC')->take(24)->get();
+    if($request->input('from')){
+        $data['prices'] = $coin->prices()->where('time','>=', $request->input('from'))->get();
+    }else {
+        $data['prices'] = $coin->prices()->orderBy('id', 'DESC')->take(7)->get();
+    }
     return response()->json($data);
 });

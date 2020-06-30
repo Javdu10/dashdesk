@@ -147,14 +147,21 @@
             </ul>
           </nav>
         
-          <main>
-              <div>
-                  <span id="volume"></span>
-                  <span id="price"></span>
-                  <span id="marketcap"></span>
-              </div>
-              <div id="chart"></div>
-          </main>
+            <main>
+                <div>
+                    <span id="volume"></span>
+                    <span id="price"></span>
+                    <span id="marketcap"></span>
+                </div>
+                <div id="parent-chart">
+                    <div id="chart"></div>
+                </div>
+                
+                <button value="{{now()->startOfWeek()}}" onclick="App.setChartDataFrom(this.value)">This week</button>
+                <button value="{{now()->startOfWeek()->subWeek()}}" onclick="App.setChartDataFrom(this.value)">Past Week</button>
+                <button value="{{now()->startOfMonth()}}" onclick="App.setChartDataFrom(this.value)">This Month</button>
+                <button value="{{now()->startOfYear()}}" onclick="App.setChartDataFrom(this.value)">This Year</button>
+            </main>
         @php
             $coins_stats = [];
             foreach ($coins as $coin) {
@@ -190,6 +197,15 @@
             }
 
             document.getElementById('themeButton').onclick = toggleTheme;
-            
+            window.Chart = null
+            window.Serie = null
+            window.currentCoin = 'nano'
+            window.currentTime = null
+            App.setChart(currentCoin)
+
+            document.body.onresize = function() {
+                var el = document.getElementById('parent-chart')
+                App.resizeChart(el.offsetHeight, el.offsetWidth);
+            }
         </script>
 </html>
