@@ -13,18 +13,18 @@ class StatsSeeder extends Seeder
      * Run the database seeds for coins stats.
      * As the CoinGecko docs : 
      * 
-     * "Hourly data will be used for duration between 1 day and 90 days"
+     * "daily data will be used for duration more than 90 days"
      *
      * @return void
      */
     public function run()
     {
         $coins = Coin::all();
-        $first_of_may = '1588291200';
+        $first_of_january_2017 = '1483228800';
         $now = now()->timestamp;
 
         foreach ($coins as $coin) {
-            $result = Http::get("api.coingecko.com/api/v3/coins/{$coin->id_coingecko}/market_chart/range?vs_currency=eur&from=$first_of_may&to=$now")->json();
+            $result = Http::get("api.coingecko.com/api/v3/coins/{$coin->id_coingecko}/market_chart/range?vs_currency=eur&from=$first_of_january_2017&to=$now")->json();
             foreach ($result['prices'] as $key => $price) {
                 $result['prices'][$key] = [
                     'time' => Carbon::createFromTimeStampMs($price[0]),

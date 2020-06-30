@@ -32802,42 +32802,52 @@ module.exports = function(module) {
  */
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
-window.App = {
-  setActiveLink: function setActiveLink(coin) {
-    document.querySelectorAll('.nav-link').forEach(function (el) {
-      el.classList.remove('active');
-    });
-    document.getElementById('nav-' + coin).classList.add('active');
-  },
-  setCoinInfo: function setCoinInfo(coin) {
-    document.getElementById('volume').innerText = window.coins[coin].last_volume;
-    document.getElementById('price').innerText = window.coins[coin].last_price;
-    document.getElementById('marketcap').innerText = window.coins[coin].last_marketcap;
-  },
-  initChart: function initChart(coin) {
-    var el = document.getElementById('chart');
+window.App = function () {
+  var Char = null;
+  var Serie = null;
+  return {
+    setActiveLink: function setActiveLink(coin) {
+      document.querySelectorAll('.nav-link').forEach(function (el) {
+        el.classList.remove('active');
+      });
+      document.getElementById('nav-' + coin).classList.add('active');
+    },
+    setCoinInfo: function setCoinInfo(coin) {
+      document.getElementById('volume').innerText = window.coins[coin].last_volume;
+      document.getElementById('price').innerText = window.coins[coin].last_price;
+      document.getElementById('marketcap').innerText = window.coins[coin].last_marketcap;
+    },
+    initChart: function initChart(coin) {
+      axios.get('api/coin/' + coin).then(function (response) {
+        if (!this.Chart) {
+          this.Chart = LightweightCharts.createChart(document.getElementById('chart'), {
+            width: 400,
+            height: 300,
+            localization: {
+              dateFormat: 'yyyy/MM/dd H:m:s'
+            }
+          });
+        }
 
-    while (el.firstChild) {
-      el.firstChild.remove();
+        if (!this.Serie) this.Serie = this.Chart.addLineSeries();else {
+          this.Chart.removeSeries(this.Serie);
+          this.Serie = this.Chart.addLineSeries();
+        }
+        var sorted = response.data.prices.sort(function (a, b) {
+          return a.id - b.id;
+        });
+        this.Serie.setData(sorted);
+      })["catch"](function (error) {
+        console.error('No coin', error);
+      });
+    },
+    setChart: function setChart(coin) {
+      this.setActiveLink(coin);
+      this.setCoinInfo(coin);
+      this.initChart(coin);
     }
-
-    var chart = LightweightCharts.createChart(el, {
-      width: 400,
-      height: 300
-    });
-    var lineSeries = chart.addLineSeries();
-    axios.post('api/coin/' + coin).then(function (data) {
-      lineSeries.setData(data.prices);
-    })["catch"](function () {
-      console.error('No coin');
-    });
-  },
-  setChart: function setChart(coin) {
-    this.setActiveLink(coin);
-    this.setCoinInfo(coin);
-    this.initChart(coin);
-  }
-};
+  };
+}();
 
 /***/ }),
 

@@ -6,43 +6,58 @@
 
 require('./bootstrap');
 
-window.App = {
-    setActiveLink(coin)
-    {
-        document.querySelectorAll('.nav-link').forEach(el => {
-            el.classList.remove('active')
-        })
-        document.getElementById('nav-'+coin).classList.add('active')
-    },
-    setCoinInfo(coin)
-    {
-        document.getElementById('volume').innerText = window.coins[coin].last_volume
-        document.getElementById('price').innerText = window.coins[coin].last_price
-        document.getElementById('marketcap').innerText = window.coins[coin].last_marketcap
-    },
-    initChart(coin)
-    {
-        var el = document.getElementById('chart')
-        while (el.firstChild) {
-            el.firstChild.remove();
-        }
-        const chart = LightweightCharts.createChart(el, { width: 400, height: 300 });
-        const lineSeries = chart.addLineSeries();
-        axios.post('api/coin/'+coin)
-            .then(function (data) {
-                lineSeries.setData(data.prices)
+window.App = function(){
+    var Char = null;
+    var Serie = null;
+    return {
+        setActiveLink(coin)
+        {
+            document.querySelectorAll('.nav-link').forEach(el => {
+                el.classList.remove('active')
             })
-            .catch(function () {
-                console.error('No coin');
-            });
-        
-    },
-    setChart(coin)
-    {
-        this.setActiveLink(coin)
-        this.setCoinInfo(coin)
-        this.initChart(coin)
-        
-    }
-}
+            document.getElementById('nav-'+coin).classList.add('active')
+        },
+        setCoinInfo(coin)
+        {
+            document.getElementById('volume').innerText = window.coins[coin].last_volume
+            document.getElementById('price').innerText = window.coins[coin].last_price
+            document.getElementById('marketcap').innerText = window.coins[coin].last_marketcap
+        },
+        initChart(coin)
+        {
+            
+            axios.get('api/coin/'+coin)
+                .then(function (response) {
+                    if(!this.Chart){
+                        this.Chart = LightweightCharts.createChart(document.getElementById('chart'), { 
+                            width: 400, 
+                            height: 300,
+                            localization: {
+                                dateFormat: 'yyyy/MM/dd H:m:s',
+                            },
+                        });
+                    }
+                    if(!this.Serie)
+                        this.Serie = this.Chart.addLineSeries();
+                    else{
+                        this.Chart.removeSeries(this.Serie);
+                        this.Serie = this.Chart.addLineSeries();
+                    }
+                    var sorted = response.data.prices.sort((a,b) => a.id - b.id)
+                    this.Serie.setData(sorted)
+                })
+                .catch(function (error) {
+                    console.error('No coin',error);
+                });
+            
+        },
+        setChart(coin)
+        {
+            this.setActiveLink(coin)
+            this.setCoinInfo(coin)
+            this.initChart(coin)
+            
+        }
+    }   
+}()
 
