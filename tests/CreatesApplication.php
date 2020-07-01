@@ -30,8 +30,7 @@ trait CreatesApplication
                 $db->connection()->getPdo()->exec("pragma foreign_keys=1");
             }
 
-            Artisan::call('migrate');
-            Artisan::call('db:seed');
+            Artisan::call('migrate:fresh --seed');
 
             self::$configurationApp = $app;
             return $app;
