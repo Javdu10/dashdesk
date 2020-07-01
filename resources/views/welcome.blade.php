@@ -187,7 +187,6 @@
                 window.currentTime = null
                 App.setChart(currentCoin)
             })
-            
 
             document.body.onresize = function() {
                 var el = document.getElementById('parent-chart')
