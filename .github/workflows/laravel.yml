@@ -23,25 +23,20 @@ jobs:
       run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
     - name: Generate key
       run: php artisan key:generate
-    - name: Upgrade Chrome Driver
-      run: php artisan dusk:chrome-driver `/opt/google/chrome/chrome --version | cut -d " " -f3 | cut -d "." -f1`
-    - name: Start Chrome Driver
-      run: ./vendor/laravel/dusk/bin/chromedriver-linux &
-    - name: Run Laravel Server
-      run: php artisan serve &
     - name: Directory Permissions
       run: chmod -R 777 storage bootstrap/cache
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       env:
         DB_PASSWORD: root
       run: vendor/bin/phpunit
+    - name: Upgrade Chrome Driver
+      run: php artisan dusk:chrome-driver `/opt/google/chrome/chrome --version | cut -d " " -f3 | cut -d "." -f1`
+    - name: Start Chrome Driver
+      run: ./vendor/laravel/dusk/bin/chromedriver-linux &
+    - name: Run Laravel Server
+      run: php artisan serve &
     - name: Run Dusk Tests
       env:
         APP_URL: "http://127.0.0.1:8000"
         DB_PASSWORD: root
       run: php artisan dusk
-    - name: output screenshot
-      uses: actions/upload-artifact@v1
-      with:
-        name: screenshot
-        path: tests/Browser/screenshots/screen.png
