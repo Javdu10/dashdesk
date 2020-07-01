@@ -2,8 +2,8 @@
 
 namespace Tests\Browser;
 
-use Tests\Browser\Pages\HomePage;
 use Laravel\Dusk\Browser;
+use Tests\Browser\Pages\HomePage;
 use Tests\DuskTestCase;
 
 class ExampleTest extends DuskTestCase
