@@ -24,11 +24,11 @@ jobs:
     - name: Generate key
       run: php artisan key:generate
     - name: Upgrade Chrome Driver
-        run: php artisan dusk:chrome-driver `/opt/google/chrome/chrome --version | cut -d " " -f3 | cut -d "." -f1`
+      run: php artisan dusk:chrome-driver `/opt/google/chrome/chrome --version | cut -d " " -f3 | cut -d "." -f1`
     - name: Start Chrome Driver
-        run: ./vendor/laravel/dusk/bin/chromedriver-linux &
+      run: ./vendor/laravel/dusk/bin/chromedriver-linux &
     - name: Run Laravel Server
-        run: php artisan serve &
+      run: php artisan serve &
     - name: Directory Permissions
       run: chmod -R 777 storage bootstrap/cache
     - name: Execute tests (Unit and Feature tests) via PHPUnit
