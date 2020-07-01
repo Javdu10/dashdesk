@@ -24,9 +24,7 @@ class CoinSeeder extends Seeder
             'name' => 'Ethereum',
             'symbol' => 'ETH',
             'logo' => 'https://assets.coingecko.com/coins/images/279/thumb/ethereum.png',
-            'description' => 'Ethereum is a smart contract platform that enables developers to build decentralized applications (DApps) on its blockchain. Ether (ETH) is the native digital currency of the Ethereum platform.
-
-            Ethereum is supported in part by the Ethereum Foundation, a non-profit that is part of the larger Ethereum ecosystem including enterprise Ethereum consortiums like the Ethereum Enterprise Alliance.',
+            'description' => 'Ethereum is a smart contract platform that enables developers to build decentralized applications (DApps) on its blockchain. Ether (ETH) is the native digital currency of the Ethereum platform. Ethereum is supported in part by the Ethereum Foundation, a non-profit that is part of the larger Ethereum ecosystem including enterprise Ethereum consortiums like the Ethereum Enterprise Alliance.',
         ]);
 
         DB::table('coins')->insert([
@@ -34,7 +32,7 @@ class CoinSeeder extends Seeder
             'name' => 'Monero',
             'symbol' => 'XMR',
             'logo' => 'https://assets.coingecko.com/coins/images/69/thumb/monero_logo.png',
-            'description' => 'Monero (XMR) is a private, secure and untraceable cryptocurrency that was launched April 18, 2014 as a fork of ByteCoin. It is an open-source, privacy-oriented digital currency built on a blockchain that is designed to be opaque. With Monero, it is said you are in complete control of your funds and privacy, as no one else can see anyone else\'s balances or transactions.',
+            'description' => 'Monero (XMR) is a private, secure and untraceable cryptocurrency that was launched April 18, 2014 as a fork of ByteCoin. It is an open-source, privacy-oriented digital currency built on a blockchain that is designed to be opaque. With Monero, it is said you are in complete control of your funds and privacy, as no one else can see anyone else s balances or transactions.',
         ]);
     }
 }
