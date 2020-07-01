@@ -19,7 +19,7 @@ class ExampleTest extends DuskTestCase
             $browser->visit('/');
             $browser->screenshot('screen');
             $browser->dump();
-            $browser->assertSee('DashDesk');
+            $browser->assertPathIs('/');
         });
     }
 }
