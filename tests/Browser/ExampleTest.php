@@ -2,7 +2,7 @@
 
 namespace Tests\Browser;
 
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\Browser\Pages\HomePage;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 
@@ -16,7 +16,7 @@ class ExampleTest extends DuskTestCase
     public function testBasicExample()
     {
         $this->browse(function (Browser $browser) {
-            $browser->visit('/')->click('#nav-ethereum')->assertSeeIn('#title', 'ETHEREUM');
+            $browser->visit(new HomePage)->click('#nav-ethereum')->assertSeeIn('#title', 'ETHEREUM');
         });
     }
 }
