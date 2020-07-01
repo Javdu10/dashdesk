@@ -186,12 +186,14 @@
                 window.currentCoin = 'nano'
                 window.currentTime = null
                 App.setChart(currentCoin)
+
+                document.body.onresize = function() {
+                    var el = document.getElementById('parent-chart')
+                    App.resizeChart(el.offsetHeight, el.offsetWidth);
+                }
             })
 
-            document.body.onresize = function() {
-                var el = document.getElementById('parent-chart')
-                App.resizeChart(el.offsetHeight, el.offsetWidth);
-            }
+            
 
             const themeMap = {
                 dark: "light",
