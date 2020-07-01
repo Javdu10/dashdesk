@@ -16,6 +16,7 @@ trait CreatesApplication
     {
         return self::initialize();
     }
+
     private static $configurationApp = null;
 
     public static function initialize()
@@ -33,6 +34,7 @@ trait CreatesApplication
             Artisan::call('migrate:fresh --seed');
 
             self::$configurationApp = $app;
+
             return $app;
         }
 
