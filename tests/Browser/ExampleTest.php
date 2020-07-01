@@ -17,7 +17,7 @@ class ExampleTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->visit('/');
-            $browser->assertSee('DashDesk');
+            $browser->assertSeeIn('.link-text.logo-text','DashDesk');
             // $this->assertTrue(true);
         });
     }
