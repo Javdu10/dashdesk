@@ -1,17 +1,17 @@
 <?php
 
 use App\Coin;
+use App\Marketcap;
 use App\Price;
 use App\Volume;
-use App\Marketcap;
-use Illuminate\Support\Carbon;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Carbon;
 
 class StatsSeeder extends Seeder
 {
     /**
      * Run the database seeds for coins stats.
-     * As the CoinGecko docs : 
+     * As the CoinGecko docs :.
      * 
      * "daily data will be used for duration more than 90 days"
      *
@@ -50,7 +50,6 @@ class StatsSeeder extends Seeder
                     'value' => $volume[1],
                     'coin_id' => $coin->id,
                 ];
-                
             }
             Volume::insert($result['total_volumes']);
         }

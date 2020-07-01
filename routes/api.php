@@ -18,17 +18,17 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/coin/{coin_gecko}', function (Request $request, $coin_gecko) {
     $coin = Coin::where('id_coingecko', $coin_gecko)->firstOrFail();
-    
+
     $data = [];
-    if($request->input('from')){
+    if ($request->input('from')) {
         $data['prices'] = Cache::remember("$coin_gecko-{$request->input('from')}", 300, function () use ($coin, $request) {
-            return $coin->prices()->where('time','>=', $request->input('from'))->get();
+            return $coin->prices()->where('time', '>=', $request->input('from'))->get();
         });
-    }else {
+    } else {
         $data['prices'] = Cache::remember("$coin_gecko-last_seven_days", 300, function () use ($coin) {
             return $coin->prices()->orderBy('id', 'DESC')->take(7)->get();
         });
-        
     }
+
     return response()->json($data);
 });
