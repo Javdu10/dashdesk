@@ -2,8 +2,8 @@
 
 namespace Tests;
 
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Contracts\Console\Kernel;
+use Illuminate\Support\Facades\Artisan;
 
 trait CreatesApplication
 {
@@ -20,14 +20,14 @@ trait CreatesApplication
 
     public static function initialize()
     {
-        if(is_null(self::$configurationApp)){
+        if (is_null(self::$configurationApp)) {
             $app = require __DIR__.'/../bootstrap/app.php';
 
             $app->make(Kernel::class)->bootstrap();
 
             if (config('database.default') == 'sqlite') {
                 $db = app()->make('db');
-                $db->connection()->getPdo()->exec("pragma foreign_keys=1");
+                $db->connection()->getPdo()->exec('pragma foreign_keys=1');
             }
 
             Artisan::call('migrate:fresh --seed');
