@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Contracts\Console\Kernel;
 
 trait CreatesApplication
@@ -13,10 +14,29 @@ trait CreatesApplication
      */
     public function createApplication()
     {
-        $app = require __DIR__.'/../bootstrap/app.php';
+        return self::initialize();
+    }
+    private static $configurationApp = null;
 
-        $app->make(Kernel::class)->bootstrap();
+    public static function initialize()
+    {
+        if(is_null(self::$configurationApp)){
+            $app = require __DIR__.'/../bootstrap/app.php';
 
-        return $app;
+            $app->make(Kernel::class)->bootstrap();
+
+            if (config('database.default') == 'sqlite') {
+                $db = app()->make('db');
+                $db->connection()->getPdo()->exec("pragma foreign_keys=1");
+            }
+
+            Artisan::call('migrate');
+            Artisan::call('db:seed');
+
+            self::$configurationApp = $app;
+            return $app;
+        }
+
+        return self::$configurationApp;
     }
 }
