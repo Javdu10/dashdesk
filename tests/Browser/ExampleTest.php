@@ -18,8 +18,8 @@ class ExampleTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->visit('/');
             $browser->screenshot('screen');
-            $browser->assertSee('DashDesk');
             $browser->dump();
+            $browser->assertSee('DashDesk');
         });
     }
 }
