@@ -38,5 +38,5 @@ ainsi que du systeme de thème qui s'applique aussi a la chart
 - 3 cryptomonnaies NANO, ETH, XMR
 - Responsive ([TradingView chartlib responsive issue](https://github.com/tradingview/lightweight-charts/issues/71#issuecomment-643126762))
 ### Amélioration supplémentaire
-- CI/CD avec GithubAction
+- CI/CD avec Github Actions et StyleCi
 - Tests avec PHPUnit et Dusk
