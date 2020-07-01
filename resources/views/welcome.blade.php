@@ -5,12 +5,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>Laravel</title>
-
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+        <meta property="og:title" content="Dashboard">
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="{{ url()->current() }}">
+        <meta property="og:image" content="{{ asset('favicon.ico') }}">
+        <meta property="og:description" content="Petite description">
+        <meta property="og:site_name" content="DashDesk">
         <!-- Styles -->
         <link rel="stylesheet" href="{{asset('css/app.css')}}" />
-        <script src="{{asset('js/app.js')}}" ></script>
+        <script src="{{asset('js/app.js')}}" defer></script>
 
     </head>
     <body>
@@ -177,12 +180,14 @@
     </body>
         <script>
             window.coins = JSON.parse('{!! json_encode($coins_stats) !!}')
+            document.addEventListener('DOMContentLoaded', function(){
+                window.Chart = null
+                window.Serie = null
+                window.currentCoin = 'nano'
+                window.currentTime = null
+                App.setChart(currentCoin)
+            })
             
-            window.Chart = null
-            window.Serie = null
-            window.currentCoin = 'nano'
-            window.currentTime = null
-            App.setChart(currentCoin)
 
             document.body.onresize = function() {
                 var el = document.getElementById('parent-chart')

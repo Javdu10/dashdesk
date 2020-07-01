@@ -1,4 +1,4 @@
-
+@import url(https://fonts.googleapis.com/css?family=Nunito);
 // Menu from Fireship.io: https://www.youtube.com/watch?v=biOMz4puGt8
 :root {
     font-size: 16px;
@@ -171,9 +171,11 @@
     .duration_buttons {
       flex-wrap: wrap;
       justify-content: space-evenly;
+      
     }
     .duration_buttons>button {
       flex: 0 50%;
+      height: 48px;
     }
   
     .logo {
