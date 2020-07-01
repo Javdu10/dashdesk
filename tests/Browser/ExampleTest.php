@@ -16,7 +16,9 @@ class ExampleTest extends DuskTestCase
     public function testBasicExample()
     {
         $this->browse(function (Browser $browser) {
-            $browser->visit('/')->assertSee('DashDesk');
+            $browser->visit('/');
+            $browser->dump();
+            $browser->assertSee('DashDesk');
         });
     }
 }
