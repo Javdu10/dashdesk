@@ -13,6 +13,7 @@ class StatsSeeder extends Seeder
      * Run the database seeds for coins stats.
      * As the CoinGecko docs :.
      * 
+     * 
      * "daily data will be used for duration more than 90 days"
      *
      * @return void

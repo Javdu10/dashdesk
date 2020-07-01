@@ -3,11 +3,11 @@
 namespace App\Console\Commands;
 
 use App\Coin;
+use App\Marketcap;
 use App\Price;
 use App\Volume;
-use App\Marketcap;
-use Illuminate\Support\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
 
 class RefreshData extends Command
@@ -44,7 +44,7 @@ class RefreshData extends Command
     public function handle()
     {
         $coins = Coin::all();
-        
+
         $before_yesterday = now()->subDay(91)->timestamp;
         $now = now()->timestamp;
 
@@ -86,7 +86,6 @@ class RefreshData extends Command
                     'volume' => $volume[1],
                     'coin_id' => $coin->id,
                 ];
-                
             }
             collect($result['total_volumes'])->each(function ($item) {
                 try {
@@ -94,7 +93,6 @@ class RefreshData extends Command
                 } catch (\Throwable $th) {
                     //throw $th;
                 }
-                
             });
         }
     }
