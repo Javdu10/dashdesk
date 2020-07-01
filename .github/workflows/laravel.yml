@@ -35,3 +35,8 @@ jobs:
       env:
         DB_PASSWORD: root
       run: vendor/bin/phpunit
+    - name: Run Dusk Tests
+      env:
+        APP_URL: "http://127.0.0.1:8000"
+        DB_PASSWORD: root
+      run: php artisan dusk
