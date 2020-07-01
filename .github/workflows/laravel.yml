@@ -40,3 +40,8 @@ jobs:
         APP_URL: "http://127.0.0.1:8000"
         DB_PASSWORD: root
       run: php artisan dusk
+    - name: output screenshot
+      uses: actions/upload-artifact@v1
+      with:
+        name: screenshot
+        path: tests/Browser/screenshots/screen.png

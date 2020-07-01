@@ -16,9 +16,10 @@ class ExampleTest extends DuskTestCase
     public function testBasicExample()
     {
         $this->browse(function (Browser $browser) {
-            $res = $browser->visit('/');
-            print_r($res);
-            $res->assertSee('Volume');
+            $browser->visit('/');
+            $browser->screenshot('filename');
+            $browser->dump();
+            //$browser->assertSee('Volume');
         });
     }
 }
