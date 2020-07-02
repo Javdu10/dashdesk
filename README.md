@@ -40,3 +40,8 @@ ainsi que du systeme de thème qui s'applique aussi a la charte
 ### Amélioration supplémentaire
 - CI/CD avec Github Actions et StyleCi (https://github.com/Javdu10/dashdesk)
 - Tests avec PHPUnit et Dusk
+# Preview
+ - Desktop with a "Solar" theme
+<img src="https://github.com/Javdu10/dashdesk/blob/master/public/js/img/full_screen_solar_theme.png">
+ - Mobile with a "dark" theme
+<img src="https://github.com/Javdu10/dashdesk/blob/master/public/js/img/mobile_dark_theme.png">
